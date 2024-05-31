@@ -18,8 +18,7 @@ def filter_datum(
     """Returns a log message obfuscated"""
     for field in fields:
         message = re.sub(
-            f"{field}=.*?{separator}",
-            f"{field}={redaction}{separator}", message
+            f"{field}=.*?{separator}", f"{field}={redaction}{separator}", message
         )
     return message
 
@@ -64,13 +63,13 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """get_db function that returns a connector to the database"""
-    db_connection = mysql.connector.connect(
-        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
-        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+    connection = mysql.connector.connect(
+        user=os.getenv("PERSONAL_DATA_DB_USERNAME", default="root"),
+        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", default=""),
         host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
         database=os.getenv("PERSONAL_DATA_DB_NAME"),
     )
-    return db_connection
+    return connection
 
 
 def main() -> None:
