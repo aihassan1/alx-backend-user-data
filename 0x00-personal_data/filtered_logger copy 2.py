@@ -18,7 +18,9 @@ def filter_datum(
     """Returns a log message obfuscated"""
     for field in fields:
         message = re.sub(
-            f"{field}=.*?{separator}", f"{field}={redaction}{separator}", message
+            f"{field}=.*?{separator}",
+            f"{field}={redaction}{separator}",
+            message
         )
     return message
 
@@ -48,17 +50,13 @@ class RedactingFormatter(logging.Formatter):
 
 def get_logger() -> logging.Logger:
     """this method returns a user data logger"""
-    logger = logging.getLogger("user_data")
-
-    logger.setLevel(logging.INFO)
-    logger.propagate = False
-
+    log = logging.getLogger("user_data")
+    log.setLevel(logging.INFO)
+    log.propagate = False
     stream_handler = logging.StreamHandler()
-    stream_handler.setFormatter()
-
     stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
-    logger.addHandler(stream_handler)
-    return logger
+    log.addHandler(stream_handler)
+    return log
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
