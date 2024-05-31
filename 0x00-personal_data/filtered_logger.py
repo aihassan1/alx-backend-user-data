@@ -79,7 +79,8 @@ def main() -> None:
     cursor.execute("SELECT * FROM users;")
     rows = cursor.fetchall()
     for row in rows:
-        print(row)
+        formatted_row = f"name={row[0]}; email={row[1]}; phone={row[2]}; ssn={row[3]}; password={row[4]}; ip={row[5]}; last_login={row[6]}; user_agent={row[7]};"
+        print(formatted_row)
 
     db_connection.close()
 
