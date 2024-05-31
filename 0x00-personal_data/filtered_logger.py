@@ -76,6 +76,7 @@ def main() -> None:
     table and display each row under a filtered format"""
     db_connection = get_db()
     cursor = db_connection.cursor()
+    cursor.execute("SELECT * FROM users;")
     rows = cursor.fetchall()
     for row in rows:
         print(row)
