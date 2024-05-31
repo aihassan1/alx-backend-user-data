@@ -33,8 +33,3 @@ class RedactingFormatter(logging.Formatter):
             self.fields, self.REDACTION, record.getMessage(), self.SEPARATOR
         )
         return super(RedactingFormatter, self).format(record)
-
-
-def get_logger() -> Logger:
-    """test"""
-    pass
