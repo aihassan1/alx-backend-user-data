@@ -78,9 +78,12 @@ def main() -> None:
     cursor = db_connection.cursor()
     cursor.execute("SELECT * FROM users;")
     rows = cursor.fetchall()
+
+    logger = get_logger(PII_FIELDS)
+
     for row in rows:
         formatted_row = f"name={row[0]}; email={row[1]}; phone={row[2]}; ssn={row[3]}; password={row[4]}; ip={row[5]}; last_login={row[6]}; user_agent={row[7]};"
-        print(formatted_row)
+        logger.info(formatted_row)
 
     db_connection.close()
 
