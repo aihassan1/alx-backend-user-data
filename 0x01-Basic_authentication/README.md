@@ -1,54 +1,42 @@
-This project implements a basic authentication system for a simple API. You'll learn about authentication mechanisms, Base64 encoding, and user credentials.
+# Simple API
 
-Learning Objectives
+Simple HTTP API for playing with `User` model.
 
-Explain general authentication concepts.
-Understand Base64 encoding and decoding.
-Implement Basic Authentication.
-Requirements
 
-Python 3.7
-Ubuntu 18.04 LTS
-Text editor or IDE
-Git version control
-Tasks
+## Files
 
-Download and Start the Project
+### `models/`
 
-Download the project archive from the provided link.
-Unzip the archive and navigate to the project directory.
-Install required dependencies using pip3 install -r requirements.txt.
-Start the API server using python3 -m api.v1.app.
-Error Handlers
+- `base.py`: base of all models of the API - handle serialization to file
+- `user.py`: user model
 
-Implement error handlers for unauthorized requests (401) and forbidden requests (403).
-The error handlers should return a JSON response with the appropriate error message and status code.
-Authentication Class
+### `api/v1`
 
-Create a class named Auth in the api/v1/auth directory.
-Define methods for checking if a request requires authentication, retrieving the authorization header, and retrieving the current user.
-Authentication Logic
+- `app.py`: entry point of the API
+- `views/index.py`: basic endpoints of the API: `/status` and `/stats`
+- `views/users.py`: all users endpoints
 
-Update the Auth class methods to handle authentication logic.
-Define which routes don't require authentication (e.g., status endpoint).
-Validate all requests to ensure they include the necessary headers.
-Basic Authentication
 
-Create a subclass named BasicAuth that inherits from Auth.
-Implement methods for extracting, decoding, and validating Base64 encoded authorization headers.
-Use these methods to extract user credentials (email and password) from the authorization header.
-User Object and Credentials
+## Setup
 
-Implement methods in BasicAuth to retrieve the user object based on email and password from your user database (file).
-Ensure proper handling of cases where the user is not found or the password is incorrect.
-Complete Basic Authentication
+```
+$ pip3 install -r requirements.txt
+```
 
-Update the API application (api/v1/app.py) to use the BasicAuth class for authentication.
-Use environment variables to switch between authentication types (e.g., AUTH_TYPE=basic_auth).
-Testing
 
-Use curl or another tool to send requests to your API and verify the authentication behavior. Test different scenarios, including:
+## Run
 
-Unauthenticated requests
-Incorrect authorization headers
-Invalid credentials
+```
+$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
+```
+
+
+## Routes
+
+- `GET /api/v1/status`: returns the status of the API
+- `GET /api/v1/stats`: returns some stats of the API
+- `GET /api/v1/users`: returns the list of users
+- `GET /api/v1/users/:id`: returns an user based on the ID
+- `DELETE /api/v1/users/:id`: deletes an user based on the ID
+- `POST /api/v1/users`: creates a new user (JSON parameters: `email`, `password`, `last_name` (optional) and `first_name` (optional))
+- `PUT /api/v1/users/:id`: updates an user based on the ID (JSON parameters: `last_name` and `first_name`)
