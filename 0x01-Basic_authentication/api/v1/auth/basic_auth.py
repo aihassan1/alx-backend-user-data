@@ -10,8 +10,7 @@ from models.user import User
 class BasicAuth(Auth):
     """class BasicAuth"""
 
-    def extract_base64_authorization_header(
-            self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(self, authorization_header: str) -> str:
         """returns the Base64 part of the Authorization
         header for a Basic Authentication:"""
 
@@ -81,3 +80,12 @@ class BasicAuth(Auth):
                 return user
 
         return None
+
+    def current_user(self, request=None) -> TypeVar("User"):
+        """retrieves the User instance for a request"""
+        auth_header = self.authorization_header(request)
+        base64_auth_header = self.extract_base64_authorization_header(auth_header)
+        decoded_header = self.decode_base64_authorization_header(base64_auth_header)
+        user_email, user_password = self.extract_user_credentials(decoded_header)
+        user_extracted = self.user_object_from_credentials(user_email, user_password)
+        return user_extracted

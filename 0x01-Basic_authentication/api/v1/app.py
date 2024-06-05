@@ -19,7 +19,7 @@ auth_type = os.getenv("AUTH_TYPE")
 
 if auth_type == "basic_auth":
     auth = BasicAuth()
-elif auth_type:
+elif auth_type == "auth":
     auth = Auth()
 
 
@@ -46,8 +46,7 @@ def check_auth():
     """checks if auth is needed based on env var"""
     if auth is None:
         return
-    excluded_paths = ["/api/v1/status/",
-                      "/api/v1/unauthorized/", "/api/v1/forbidden/"]
+    excluded_paths = ["/api/v1/status/", "/api/v1/unauthorized/", "/api/v1/forbidden/"]
     if not (
         auth.require_auth(
             request.path,
