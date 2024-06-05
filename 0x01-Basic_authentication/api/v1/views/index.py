@@ -39,4 +39,5 @@ def unauthorized():
 def forbidden():
     """GET /api/v1/unauthorized
     This endpoint raises a 403 error."""
+
     abort(403)
