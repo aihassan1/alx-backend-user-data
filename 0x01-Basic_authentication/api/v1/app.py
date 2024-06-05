@@ -39,6 +39,7 @@ def forbidden(err):
 
 @app.before_request
 def check_auth():
+    """checks if auth is needed based on env var"""
     if auth is None:
         return
     excluded_paths = ["/api/v1/status/", "/api/v1/unauthorized/", "/api/v1/forbidden/"]
