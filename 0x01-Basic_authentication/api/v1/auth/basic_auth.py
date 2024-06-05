@@ -47,9 +47,10 @@ class BasicAuth(Auth):
             or type(decoded_base64_authorization_header) is not str
             or decoded_base64_authorization_header.find(":") == -1
         ):
-            return None
+            return (None, None)
         else:
 
-            email, password = decoded_base64_authorization_header.split(":")
-            print(email, password)
+            email = decoded_base64_authorization_header.split(":", 1)[0]
+            password = decoded_base64_authorization_header.split(":")[1]
+
             return (email, password)
