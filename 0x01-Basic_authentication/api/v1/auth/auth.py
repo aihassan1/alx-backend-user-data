@@ -19,7 +19,7 @@ class Auth:
         """authorization_header"""
         if request is None:
             return None
-        if request
+
 
         return None
 
