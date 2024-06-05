@@ -15,7 +15,7 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 auth = None
 auth_type = os.getenv("AUTH_TYPE")
-if auth_type == "auth":
+if auth_type:
     auth = Auth()
 
 
@@ -49,8 +49,10 @@ def check_auth():
         )
     ):
         return
+
     if auth.authorization_header(request) is None:
         abort(401)
+
     if auth.current_user(request) is None:
         abort(403)
 
