@@ -6,7 +6,8 @@ from typing import List, TypeVar
 
 
 class Auth:
-    """class auth"""
+    """returns True if the path is not in the list
+    of strings excluded_paths"""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Public method"""
@@ -24,8 +25,10 @@ class Auth:
         """authorization_header"""
         if request is None:
             return None
-
-        return None
+        if not request.get("Authorization"):
+            return None
+        else:
+            return request.get("Authorization")
 
     def current_user(self, request=None) -> TypeVar("User"):
         """current_user"""
