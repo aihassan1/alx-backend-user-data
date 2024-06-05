@@ -10,8 +10,11 @@ class Auth:
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Public method"""
+        path = path if path.endswith("/") else path + "/"
+
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
+
         if path in excluded_paths:
             return False
 
@@ -19,7 +22,6 @@ class Auth:
         """authorization_header"""
         if request is None:
             return None
-
 
         return None
 
