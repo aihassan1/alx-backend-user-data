@@ -74,7 +74,7 @@ def check_auth():
         auth.authorization_header(request) is None
         and auth.session_cookie(request) is None
     ):
-        abort(401)
+        abort(401, description="Unauthorized")
 
     request.current_user = auth.current_user(request)
 
