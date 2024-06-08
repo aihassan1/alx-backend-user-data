@@ -40,6 +40,7 @@ def login_path():
 
 @app_views.route("/auth_session/logout", methods=["DELETE"], strict_slashes=False)
 def logout():
+    """logs out and destroy the session"""
     from api.v1.app import auth
 
     destroyed_session = auth.destroy_session(request)
