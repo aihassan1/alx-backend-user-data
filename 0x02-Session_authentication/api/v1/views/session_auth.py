@@ -21,15 +21,15 @@ def login_path():
     #     user_ = User.search({"email": email})
     # except Exception:
     #     return {"error": "no user found for this email"}, 404
-    
+
     user_ = User.search({"email": email})
-    
+
     if not user_:
         return {"error": "no user found for this email"}, 404
-    
+
     # If the password is not the one of the User found, return the JSON
     user = user_[0]
-    
+
     if user.is_valid_password(password) is False:
         return {"error": "wrong password"}, 401
 
@@ -41,4 +41,3 @@ def login_path():
         response = make_response(user.to_json())
         response.set_cookie(session_name, session_id)
         return response
-
