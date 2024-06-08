@@ -17,11 +17,6 @@ def login_path():
     if password is None:
         return {"error": "password missing"}, 400
 
-    # try:
-    #     user_ = User.search({"email": email})
-    # except Exception:
-    #     return {"error": "no user found for this email"}, 404
-
     user_ = User.search({"email": email})
 
     if not user_:
