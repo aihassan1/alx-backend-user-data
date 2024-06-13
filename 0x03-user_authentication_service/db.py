@@ -65,17 +65,19 @@ class DB:
             raise NoResultFound
         return user
 
-    def update_user(self, user_id: int, **kwargs) -> None:
-        """this method updates the located user's attributes"""
+    def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
+        """update a user"""
         if kwargs:
+
             try:
                 user = self.find_user_by(id=user_id)
+
                 for key, value in kwargs.items():
-                    if hasattr(user, key):
-                        setattr(user, key, value)
-                    else:
+                    if not hasattr(User, key):
                         raise ValueError
+                    setattr(user, key, value)
                 self._session.commit()
-            except NoResultFound:
-                pass
+
+            except Exception:
+                raise ValueError
             return None
