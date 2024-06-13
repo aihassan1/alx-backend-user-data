@@ -39,8 +39,7 @@ def login() -> json:
         abort(401)
 
     session_id = AUTH.create_session(email)
-    response = make_response(
-        jsonify({"email": "f{email}", "message": "logged in"}))
+    response = make_response(jsonify({"email": "f{email}", "message": "logged in"}))
     response.set_cookie(session_id, session_id)
     return response
 
@@ -71,7 +70,7 @@ def profile() -> str:
     if user is None:
         abort(403)
 
-    return jsonify({"email": f"{user.email}"}), 200
+    return jsonify({"email": user.email}), 200
 
 
 if __name__ == "__main__":
