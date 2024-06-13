@@ -38,8 +38,7 @@ class Auth:
                 raise ValueError(f"User {email} already exists")
         except NoResultFound:
             hashed_password = _hash_password(password)
-            new_user = self._db.add_user(
-                email, hashed_password)
+            new_user = self._db.add_user(email, hashed_password)
             return new_user
 
     def valid_login(self, email: str, password: str) -> bool:
@@ -95,3 +94,14 @@ class Auth:
         reset_token = _generate_uuid()
         self._db.update_user(user.id, reset_token=reset_token)
         return reset_token
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        """update_password method. It takes reset_token string argument
+        and a password string argument and returns None."""
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+        except Exception:
+            raise ValueError
+
+        hashed_pwd = _hash_password(password)
+        self._db.update_user(user.id, hashed_password=hashed_pwd, reset_token=None)
