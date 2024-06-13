@@ -3,6 +3,7 @@
 
 from flask import jsonify, Flask, render_template, make_response, request, Response
 from auth import Auth
+
 AUTH = Auth()
 
 app = Flask(__name__)
@@ -15,7 +16,7 @@ def home():
 
 
 @app.route("/users", methods=["post"])
-def add_user():
+def add_user() -> str:
     """adds a new user"""
     try:
         email = request.form.get("email")
