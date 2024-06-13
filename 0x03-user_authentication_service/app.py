@@ -49,12 +49,29 @@ def login() -> json:
 def logout():
     """logs out a user and destroy its session"""
     session_id = request.cookies.get("session_id", None)
+    if session_id is None:
+        abort(403)
+
     user = AUTH.get_user_from_session_id(session_id)
     if user is None or session_id is None:
         abort(403)
 
     AUTH.destroy_session(user.id)
     return redirect("/")
+
+
+@app.route("/profile", methods=["GET"], strict_slashes=False)
+def profile():
+    """returns a user profile based on session id"""
+    session_id_cookie = request.cookies.get("session_id", None)
+    if session_id_cookie is None:
+        abort(403)
+
+    user = AUTH.get_user_from_session_id(session_id_cookie)
+    if user is None:
+        abort(403)
+
+    return jsonify({"email": f"{user.email}"})
 
 
 if __name__ == "__main__":
