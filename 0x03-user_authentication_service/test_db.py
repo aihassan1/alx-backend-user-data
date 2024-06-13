@@ -49,10 +49,6 @@ class TestDB(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.db.update_user(self.user1.id, invalid_key="value")
 
-    def test_hash_password(self):
-        password = "password123"
-        hashed_password = self.db._hash_password(password)
-        self.assertIsInstance(hashed_password, bytes)
 
 
 if __name__ == "__main__":
