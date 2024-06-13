@@ -15,13 +15,12 @@ def home():
     return jsonify({"message": "Bienvenue"})
 
 
-@app.route("/users", methods=["post"], strict_slashes=False)
-def add_user() -> str:
-    """adds a new user"""
-    try:
-        email = request.form.get("email")
-        password = request.form.get("password")
+def users() -> str:
+    """this method registers new users -> POST /users"""
+    email = request.form.get("email")
+    password = request.form.get("password")
 
+    try:
         new_user = AUTH.register_user(email, password)
         if new_user is not None:
             return jsonify({"email": f"{email}", "message": "user created"}), 200
