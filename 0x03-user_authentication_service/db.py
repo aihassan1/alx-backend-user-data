@@ -75,7 +75,8 @@ class DB:
                 for key, value in kwargs.items():
                     if not hasattr(User, key):
                         raise ValueError
-                    setattr(user, key, value)
+                    else:
+                        setattr(user, key, value)
                 self._session.commit()
 
             except NoResultFound:
