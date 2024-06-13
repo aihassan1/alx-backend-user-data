@@ -3,8 +3,6 @@
 
 from flask import jsonify, Flask, render_template, make_response, request, Response
 from auth import Auth
-from sqlalchemy.exc import u
-
 AUTH = Auth()
 
 app = Flask(__name__)
