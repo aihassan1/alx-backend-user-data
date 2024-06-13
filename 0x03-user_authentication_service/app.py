@@ -3,6 +3,7 @@
 
 from flask import jsonify, Flask, render_template, make_response, request, Response
 from auth import Auth
+from sqlalchemy.exc import u
 
 AUTH = Auth()
 
@@ -23,7 +24,7 @@ def add_user():
         password = request.form.get("password")
         AUTH.register_user(email, password)
         return {"email": f"{email}", "message": "user created"}
-    except ValueError:
+    except Exception:
         return ({"message": "email already registered"}), 400
 
 
