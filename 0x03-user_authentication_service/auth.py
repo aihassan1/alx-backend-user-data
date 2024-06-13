@@ -54,3 +54,14 @@ class Auth:
                 return checkpw(password.encode(), user_hashed_password)
         except Exception:
             return False
+
+    def create_session(self, email: str) -> str:
+        """takes an email string argument and returns the session ID"""
+        try:
+            current_user = self._db.find_user_by(email=email)
+            session_id = _generate_uuid()
+            self._db.update_user(user_id=current_user.id, session_id=session_id)
+            return session_id
+
+        except Exception:
+            return None
