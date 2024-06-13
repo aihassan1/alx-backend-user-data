@@ -64,3 +64,18 @@ class DB:
         if user is None:
             raise NoResultFound
         return user
+
+    def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
+        """update a user"""
+        keys = list(kwargs.keys())
+        for key in keys:
+            if not hasattr(User, key):
+                raise ValueError
+
+        user = self.find_user_by(id=user_id)
+
+        try:
+            for key, value in kwargs.items():
+                setattr(user, key, value)
+        except Exception:
+            raise ValueError
