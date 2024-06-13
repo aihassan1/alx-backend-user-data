@@ -39,8 +39,7 @@ def login() -> json:
         abort(401)
 
     session_id = AUTH.create_session(email)
-    response = make_response(
-        jsonify({"email": "f{email}", "message": "logged in"}))
+    response = make_response(jsonify({"email": "f{email}", "message": "logged in"}))
     response.set_cookie(session_id, session_id)
     return response
 
@@ -72,6 +71,20 @@ def profile() -> str:
         abort(403)
     else:
         return jsonify({"email": user.email}), 200
+
+
+@app.route("/reset_password", methods=["POST"], strict_slashes=False)
+def get_reset_password_token():
+    """get_reset_password_token"""
+    email = request.form.get("email")
+    try:
+        reset_pwd_token = AUTH.get_reset_password_token(email)
+        response = make_response(
+            jsonify({"email": email, "reset_token": reset_pwd_token})
+        )
+        return response, 200
+    except ValueError:
+        abort(403)
 
 
 if __name__ == "__main__":

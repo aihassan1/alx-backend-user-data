@@ -38,7 +38,8 @@ class Auth:
                 raise ValueError(f"User {email} already exists")
         except NoResultFound:
             hashed_password = _hash_password(password)
-            new_user = self._db.add_user(email, hashed_password)
+            new_user = self._db.add_user(
+                email, hashed_password)
             return new_user
 
     def valid_login(self, email: str, password: str) -> bool:
@@ -85,7 +86,8 @@ class Auth:
             return None
 
     def get_reset_password_token(self, email: str) -> str:
-        """returns a reset token if the user exists"""
+        """returns a reset token if the user exists
+        raise ValueError if the user doesn't exist"""
         try:
             user = self._db.find_user_by(email=email)
         except Exception:
