@@ -50,6 +50,6 @@ class Auth:
         except Exception:
             return False
 
-    def _generate_uuid() -> UUID:
+    def _generate_uuid(self) -> UUID:
         """return a string representation of a new UUID"""
         return uuid4()
