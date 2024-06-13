@@ -53,13 +53,11 @@ class DB:
             InvalidRequestError: if the keys in the dict are invalid
             NoResultFound: If no user is found
         """
-        # keys = list(kwargs.keys())
+        keys = list(kwargs.keys())
 
-        # for key in keys:
-        #     if not hasattr(User, key):
-        #         raise InvalidRequestError
-        if not kwargs:
-            raise InvalidRequestError
+        for key in keys:
+            if not hasattr(User, key):
+                raise InvalidRequestError
 
         user = self._session.query(User).filter_by(**kwargs).first()
 
