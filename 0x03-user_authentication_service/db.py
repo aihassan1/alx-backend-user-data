@@ -38,10 +38,10 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs: Dict[str, Any]) -> User:
+    def find_user_by(self, **kwargs: Dict[str, str]) -> User:
         """search for a user"""
         try:
-            user = self._session.query(User).filter_by(**kwargs).one()
+            user = self._session.query(User).filter_by(**kwargs).first()
         except NoResultFound:
             raise NoResultFound()
         except InvalidRequestError:
