@@ -45,7 +45,7 @@ def login() -> json:
     return response
 
 
-@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
+@app.route(rule="/sessions", methods=["DELETE"], strict_slashes=False)
 def logout():
     """logs out a user and destroy its session"""
     session_id = request.cookies.get("session_id", None)
@@ -86,6 +86,21 @@ def get_reset_password_token() -> str:
         return response, 200
     except ValueError:
         abort(403)
+
+
+@app.route(rule="/reset_password", methods=["PUT"], strict_slashes=False)
+def update_password() -> str:
+    """update the password"""
+    email = request.form.get("email")
+    password = request.form.get("password")
+    reset_token = request.form.get("reset_token")
+
+    try:
+        AUTH.update_password(reset_token, password)
+    except Exception:
+        abort(403)
+
+    return jsonify({"email": email, "message": "Password updated"}), 200
 
 
 if __name__ == "__main__":
