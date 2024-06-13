@@ -40,9 +40,27 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs: Dict[str, str]) -> User:
-        """search for a user"""
+        """
+        Search for a user in the database based on the provided keyword arguments.
+
+        Args:
+            **kwargs: Keyword arguments representing the search criteria.
+
+        Returns:
+            The User object that matches the search criteria.
+
+        Raises:
+            InvalidRequestError: if the keys in the dict are invalid
+            NoResultFound: If no user is found that matches the search criteria.
+        """
+        keys = list(kwargs.keys())
+
+        for key in keys:
+            if not hasattr(User, key):
+                raise InvalidRequestError
 
         user = self._session.query(User).filter_by(**kwargs).first()
+
         if not user:
             raise NoResultFound()
         return user
