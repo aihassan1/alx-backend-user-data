@@ -39,7 +39,8 @@ def login() -> json:
         abort(401)
 
     session_id = AUTH.create_session(email)
-    response = make_response(jsonify({"email": "f{email}", "message": "logged in"}))
+    response = make_response(
+        jsonify({"email": "f{email}", "message": "logged in"}))
     response.set_cookie(session_id, session_id)
     return response
 
@@ -74,7 +75,7 @@ def profile() -> str:
 
 
 @app.route("/reset_password", methods=["POST"], strict_slashes=False)
-def get_reset_password_token():
+def get_reset_password_token() -> str:
     """get_reset_password_token"""
     email = request.form.get("email")
     try:
