@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """new flask APP"""
 
-from flask import jsonify, Flask, render_template, make_response, request, Response
+from flask import jsonify, Flask, request, Response
 from auth import Auth
 
 AUTH = Auth()
@@ -22,9 +22,9 @@ def users() -> str:
     password = request.form.get("password")
 
     try:
-        new_user = AUTH.register_user(email, password)
-        if new_user is not None:
-            return jsonify({"email": f"{email}", "message": "user created"}), 200
+        AUTH.register_user(email, password)
+        return jsonify({"email": f"{email}", "message": "user created"})
+
     except Exception:
         return jsonify({"message": "email already registered"}), 400
 
