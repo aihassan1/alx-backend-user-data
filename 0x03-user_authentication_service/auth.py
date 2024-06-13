@@ -4,6 +4,7 @@ from bcrypt import gensalt, hashpw
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
+from bcrypt import checkpw
 
 
 def _hash_password(password: str) -> bytes:
@@ -33,3 +34,18 @@ class Auth:
             hashed_password = _hash_password(password)
             new_user = self._db.add_user(email, hashed_password)
             return new_user
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """expects email and password required arguments
+        returns a boolean"""
+        if email is None or password is None:
+            return False
+
+        try:
+            user_found = self._db.find_user_by(email)
+            if user_found is not None:
+                user_hashed_password = user_found.hashed_password
+                return checkpw(
+                    password.encode(), user_hashed_password)
+        except Exception:
+            return False
