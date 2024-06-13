@@ -57,7 +57,7 @@ class DB:
 
         for key in keys:
             if not hasattr(User, key):
-                raise InvalidRequestError
+                raise InvalidRequestError()
 
         user = self._session.query(User).filter_by(**kwargs).first()
 
