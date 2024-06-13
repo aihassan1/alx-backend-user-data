@@ -15,6 +15,11 @@ def _hash_password(password: str) -> bytes:
     return hashed_password
 
 
+def _generate_uuid() -> UUID:
+    """return a string representation of a new UUID"""
+    return str(uuid4())
+
+
 class Auth:
     """Auth class to interact with the authentication database."""
 
@@ -49,7 +54,3 @@ class Auth:
                 return checkpw(password.encode(), user_hashed_password)
         except Exception:
             return False
-
-    def _generate_uuid(self) -> UUID:
-        """return a string representation of a new UUID"""
-        return str(uuid4())
