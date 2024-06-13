@@ -39,7 +39,8 @@ def login() -> json:
         abort(401)
 
     session_id = AUTH.create_session(email)
-    response = make_response(jsonify({"email": "f{email}", "message": "logged in"}))
+    response = make_response(
+        jsonify({"email": "f{email}", "message": "logged in"}))
     response.set_cookie(session_id, session_id)
     return response
 
@@ -47,12 +48,12 @@ def login() -> json:
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
 def logout():
     """logs out a user and destroy its session"""
-    session_id = request.cookies.get("session_id")
+    session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
-    if user is None:
+    if user is None or session_id is None:
         abort(403)
 
-    AUTH.destroy_session(session_id)
+    AUTH.destroy_session(user.id)
     redirect(url_for("home"))
 
 
