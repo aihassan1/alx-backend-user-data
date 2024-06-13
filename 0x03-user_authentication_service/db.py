@@ -79,3 +79,4 @@ class DB:
                 setattr(user, key, value)
         except Exception:
             raise ValueError
+        return None
