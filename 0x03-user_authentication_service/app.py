@@ -4,6 +4,7 @@
 from flask import jsonify, Flask, request, json, abort, make_response
 from flask import redirect, url_for
 from auth import Auth
+from typing import Tuple
 
 AUTH = Auth()
 
@@ -39,7 +40,8 @@ def login() -> json:
         abort(401)
 
     session_id = AUTH.create_session(email)
-    response = make_response(jsonify({"email": "f{email}", "message": "logged in"}))
+    response = make_response(
+        jsonify({"email": "f{email}", "message": "logged in"}))
     response.set_cookie(session_id, session_id)
     return response
 
@@ -60,7 +62,7 @@ def logout():
 
 
 @app.route("/profile", methods=["GET"], strict_slashes=False)
-def profile() -> str:
+def profile() -> Tuple[Response, int]:
     """returns a user profile based on session id"""
     session_id_cookie = request.cookies.get("session_id", None)
     if session_id_cookie is None:
