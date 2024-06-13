@@ -42,10 +42,9 @@ class Auth:
             return False
 
         try:
-            user_found = self._db.find_user_by(email)
+            user_found = self._db.find_user_by(email=email)
             if user_found is not None:
                 user_hashed_password = user_found.hashed_password
-                return checkpw(
-                    password.encode(), user_hashed_password)
+                return checkpw(password.encode(), user_hashed_password)
         except Exception:
             return False
