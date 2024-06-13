@@ -2,6 +2,7 @@
 """new flask APP"""
 
 from flask import jsonify, Flask, request, json, abort, make_response
+from flask import redirect, url_for
 from auth import Auth
 
 AUTH = Auth()
@@ -52,6 +53,7 @@ def logout():
         abort(403)
 
     AUTH.destroy_session(session_id)
+    redirect(url_for("home"))
 
 
 if __name__ == "__main__":
