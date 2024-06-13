@@ -78,6 +78,6 @@ class DB:
                     setattr(user, key, value)
                 self._session.commit()
 
-            except Exception:
-                raise ValueError
+            except NoResultFound:
+                pass
             return None
