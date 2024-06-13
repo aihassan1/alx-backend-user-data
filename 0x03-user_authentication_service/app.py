@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """new flask APP"""
 
-from flask import jsonify, request, Flask, render_template, make_response
+from flask import jsonify, Flask, render_template, make_response, request
 
 
 app = Flask(__name__)
@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route("/", methods=["GET"])
 def home():
     """home page"""
-    return jsonify('{"message": "Bienvenue"}')
+    return jsonify({"message": "Bienvenue"})
 
 
 if __name__ == "__main__":
